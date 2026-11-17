@@ -15,8 +15,9 @@ The paper asks: if you perturb node j, when does node i feel it? Network topolog
 
 All dynamics studied share one form. Each node i has an activity xᵢ that evolves as
 
+$$
 \frac{dx_i}{dt} = M_0(x_i) + \sum_{j} A_{ij}\, M_1(x_i)\, M_2(x_j)
-
+$$
 
 M₀ is what a node does alone (decay, recovery), M₁ is how its own state gates incoming influence, and M₂ is what a neighbour sends. A is the adjacency matrix, and Sᵢ = Σⱼ Aᵢⱼ is the weighted degree.
 
@@ -36,15 +37,15 @@ The paper's central claim is that each node's response time scales as τᵢ \~ S
 
 **Step 1, steady state.** Set dxᵢ/dt = 0 and use the mean-field approximation: in a random network every node's neighbours look statistically alike, so the neighbour sum is degree times a typical neighbour value m.
 
-
+```latex
 M_0(x_i) + M_1(x_i)\, S_i\, m = 0 \;\Longrightarrow\; x_i = x(S_i)
-
+```
 
 **Step 2, stiffness.** Hold the neighbours fixed after a small nudge and linearise. The node relaxes exponentially at a rate set by the diagonal Jacobian term, and the time to reach a fraction η of its final response is
 
-
+```latex
 |J_{ii}| = \left| M_0'(x_i) + M_1'(x_i)\, S_i\, m \right|, \qquad \tau_i = \frac{\ln\!\big(\tfrac{1}{1-\eta}\big)}{|J_{ii}|}
-
+```
 
 The size of the nudge cancels: it sets how far the node moves, not how fast.
 
@@ -56,17 +57,17 @@ The size of the nudge cancels: it sets how far the node moves, not how fast.
 
 For SIS the power law is only asymptotic. The local log-log slope is
 
-
+```latex
 \frac{d\ln\tau}{d\ln S} = -\frac{S\,m}{B + S\,m}
-
+```
 
 which is about −0.41 at S = 1, −0.88 at S = 10 and −0.97 at S = 50. On a network whose degrees are mostly small, the measured slope sits well above −1.
 
 **From one node to the network.** A signal travels as a relay, so delays add along the path. The paper's temporal distance (Eq. 5) sums Sₚ^θ over the nodes of a hop-shortest path, excluding the source, and minimises over such paths:
 
-
+```latex
 \mathcal{L}(j \to i) = \min_{\Pi(j \to i)} \sum_{p \in \Pi} S_p^{\theta}, \qquad T(j \to i) \propto \mathcal{L}(j \to i)
-
+```
 
 The claim is a proportionality: 𝓛 predicts relative arrival times, and one constant per system is fitted.
 
@@ -183,9 +184,9 @@ For SIS on the scale-free network, arrival times identify the source almost perf
 
 **The estimator.** For each candidate source s, a predictor D(s, o) says how far in time each observer o is from s. If s is the true source, the observed times should line up as
 
-
+```latex
 t_o \approx t_0 + c\, D(s, o), \qquad c > 0
-
+```
 
 with unknown onset t₀ and unknown scale c. I fit both by least squares for every candidate, rank candidates by residual, and take the best as the estimate.
 
