@@ -7,7 +7,7 @@ I replicated the core results of Hens, Harush, Haber, Cohen and Barzel, *Spatiot
 
 For SIS on scale-free networks the picture flips: hop count predicts arrival times better than temporal distance (0.80 vs 0.63). Running the problem backwards makes the gap stark. With 20% of nodes observed, a hop-count estimator finds the true source 89% of the time, the temporal-distance estimator about 1%, and an oracle using the true dynamics 100%. The arrival times carry the information; the paper's metric does not extract it.
 
-**Open question:** what propagation metric would close the gap between hop count and the oracle for composite (θ < 0) dynamics?
+Code: two Jupyter notebooks, a replication notebook covering ℝ₁, ℝ₂ and SIS, and an SIS and retrodiction notebook.
 
 ## Background
 
@@ -222,23 +222,8 @@ Top-1 accuracy with 20% of nodes observed:
 
 **Robustness check.** To rule out the linear fit as the cause, I refitted in log space with a known onset time, which matches the proportional form T ∝ 𝓛 exactly. On SF with 10% observed, 𝓛 rises only to 0.05 (S⁻¹) and 0.09 (exact 1/J), against 0.75 for hops and 0.99 for the oracle. The failure is in the metric, not the fitting.
 
-## Discussion and next steps
 
-My working hypothesis is that saturation breaks the additivity of delays that 𝓛 relies on; this is not yet tested.
 
-**Why SIS might break.** A stiff node re-equilibrates fast, but it also moves very little: its final displacement is δx(∞) = p/k for push p and stiffness k. In SIS the hubs are both the stiffest nodes and the most saturated (x\* up to 0.98 on SF). The theory counts them as near-free shortcuts, but the signal that leaves a hub is fast and faint, so it may not be enough to drive downstream nodes to 70% of their response. The slower, stronger route through low-degree nodes then sets the arrival time, which looks more like hop count. 𝓛 times each relay but ignores how much signal it passes on.
-
-**Limitations.**
-
-- One network realisation per type, N = 350–400 against the paper's 6,000.
-- One infection rate, which puts SIS on SF deep in saturation.
-- The oracle uses the same simulator that generated the data, so it is a noise-limited upper bound, not a practical method.
-- SF1 was not included in the retrodiction runs.
-
-**Next steps.**
-
-1. Lower the infection rate so x\* sits well below 1, and check whether 𝓛 recovers on SF. This directly tests the saturation hypothesis.
-2. Build an amplitude-aware temporal distance that weights each relay by how much of the signal it passes on, not only how fast it responds.
 3. Repeat at N = 6,000 and over several network realisations, and add SF1 and the paper's empirical networks.
 4. Extend retrodiction to the degree-driven regime (ℝ₂), where 𝓛 should beat hop count, and map identifiability against θ.
 
