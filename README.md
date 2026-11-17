@@ -1,7 +1,7 @@
-# Signal-Propagation
+# Signal Propagation
 ## Summary
 
-The paper's temporal distance predicts signal arrival times well for regulatory dynamics, but fails for SIS epidemics on scale-free networks, and fails completely when used to locate the source of a perturbation.
+The paper's temporal distance predicts signal arrival times well for regulatory dynamics. For SIS epidemics on scale-free networks it breaks down, and it does not carry over to locating the source of a perturbation from arrival times.
 
 I replicated the core results of Hens, Harush, Haber, Cohen and Barzel, *Spatiotemporal signal propagation in complex networks* ([Nature Physics 15, 403–412, 2019](https://arxiv.org/abs/1801.08854)), for three dynamics (two gene-regulation models and SIS) on Erdős–Rényi and scale-free networks. The local scaling of response time with degree reproduces for all three. The collapse of arrival times onto the temporal distance holds for the regulatory models, including the hub-bottlenecked case where hop count is nearly useless (correlation 0.91 for temporal distance vs 0.25 for hops).
 
@@ -219,11 +219,16 @@ Top-1 accuracy with 20% of nodes observed:
 | SF | 0% | 0.89 | 0.01 | 0.03 | 1.00 |
 | SF | 20% | 0.81 | 0.02 | 0.03 | 0.99 |
 
-**Robustness check.** To rule out the linear fit as the cause, I refitted in log space with a known onset time, which matches the proportional form T ∝ 𝓛 exactly. On SF with 10% observed, 𝓛 rises only to 0.05 (S⁻¹) and 0.09 (exact 1/J), against 0.75 for hops and 0.99 for the oracle. The failure is in the metric, not the fitting.
+**Robustness check.** To rule out the linear fit as the cause, I refitted in log space with a known onset time, which matches the proportional form T ∝ 𝓛 exactly. On SF with 10% observed, 𝓛 rises only to 0.05 (S⁻¹) and 0.09 (exact 1/J), against 0.75 for hops and 0.99 for the oracle. The gap comes from the metric, not the fitting.
 
+## Limitations and next steps
 
+- Networks are 15–17 times smaller than the paper's (N = 350–400 vs 6,000). This matters most for SIS, where the power law only emerges at large degree.
+- One network realisation per type, and 20–25 sampled sources per network for the replication.
 
-3. Repeat at N = 6,000 and over several network realisations, and add SF1 and the paper's empirical networks.
-4. Extend retrodiction to the degree-driven regime (ℝ₂), where 𝓛 should beat hop count, and map identifiability against θ.
+Next:
+
+1. Repeat at N = 6,000 and over several network realisations, and add SF1 and the paper's empirical networks.
+2. Extend retrodiction to the degree-driven regime (ℝ₂), where 𝓛 should beat hop count, and map identifiability against θ.
 
 *Code: two Jupyter notebooks, a replication notebook covering ℝ₁, ℝ₂ and SIS, and an SIS and retrodiction notebook.*
